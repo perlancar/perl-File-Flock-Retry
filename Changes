@@ -1,6 +1,6 @@
 Revision history for File-Flock-Retry
 
-0.59    2014-12-05 (PERLANCAR) (unreleased)
+0.59    2014-12-05 (PERLANCAR)
 
         - Split from SHARYANTO-File-Util and renamed to File-Flock-Retry.
 
