@@ -1,5 +1,10 @@
 Revision history for File-Flock-Retry
 
+0.61    2015-10-22 (PERLANCAR)
+
+        - Add option: shared.
+
+
 0.60    2015-09-03 (PERLANCAR)
 
 	- No functional changes.
@@ -12,4 +17,3 @@ Revision history for File-Flock-Retry
 0.59    2014-12-05 (PERLANCAR)
 
         - Split from SHARYANTO-File-Util and renamed to File-Flock-Retry.
-
