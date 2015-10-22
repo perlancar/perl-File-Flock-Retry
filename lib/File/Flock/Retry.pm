@@ -17,6 +17,7 @@ sub lock {
     defined($path) or die "Please specify path";
     $h{path}    = $path;
     $h{retries} = $opts->{retries} // 60;
+    $h{shared}  = $opts->{shared} // 0;
 
     my $self = bless \%h, $class;
     $self->_lock;
@@ -46,7 +47,7 @@ sub _lock {
         my @st1 = stat($self->{_fh}); # stat before lock
 
         # 3
-        if (flock($self->{_fh}, LOCK_EX | LOCK_NB)) {
+        if (flock($self->{_fh}, ($self->{shared} ? LOCK_SH : LOCK_EX) | LOCK_NB)) {
             # if file is unlinked by another process between 1 & 2, @st1 will be
             # empty and we check here.
             redo TRY unless @st1;
@@ -166,6 +167,11 @@ Available options:
 =item * retries => int (default: 60)
 
 Number of retries (equals number of seconds, since retry is done every second).
+
+=item * shared => bool (default: 0)
+
+By default, an exclusive lock (LOCK_EX) is attempted. However, if this option is
+set to true, a shared lock (LOCK_SH) is attempted.
 
 =back
 

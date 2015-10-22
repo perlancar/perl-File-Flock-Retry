@@ -53,6 +53,8 @@ subtest "was created, but not empty" => sub {
     ok((-f "f1"), "f1 still exists after DESTROY");
 };
 
+# XXX test shared lock
+
 DONE_TESTING:
 done_testing();
 if (Test::More->builder->is_passing) {
