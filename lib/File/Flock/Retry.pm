@@ -195,7 +195,7 @@ L<File::Flock>
 
 L<File::Flock::Tiny> which is also tiny, but does not have the autoremove and
 autoretry capability which I want. See also:
-https://github.com/trinitum/perl-File-Flock-Tiny/issues/1
+L<https://github.com/trinitum/perl-File-Flock-Tiny/issues/1>
 
 flock() Perl function.
 
