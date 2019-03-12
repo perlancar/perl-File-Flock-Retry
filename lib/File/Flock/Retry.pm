@@ -7,7 +7,7 @@ use 5.010001;
 use strict;
 use warnings;
 
-use Fcntl ':flock';
+use Fcntl ':DEFAULT', ':flock';
 
 sub lock {
     my ($class, $path, $opts) = @_;
@@ -181,7 +181,7 @@ Integer. Default: O_CREAT | O_RDWR.
 File open mode, to be passed to Perl's C<sysopen()>. For example, if you want to
 avoid race condition between creating and locking the file, you might want to
 use C<< O_CREAT | O_EXCL | O_RDWR >> to fail when the file already exists. Note
-that the constants are available after you do a C<< use Fcntl ':flock'; >>.
+that the constants are available after you do a C<< use Fcntl ':DEFAULT'; >>.
 
 =item * retries
 
