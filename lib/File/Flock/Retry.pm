@@ -149,16 +149,20 @@ I prefer this approach to blocking/waiting indefinitely or failing immediately.
 
 =head1 METHODS
 
-=head2 $lock = File::Flock::Retry->lock($path, \%opts)
+=head2 lock
+
+Usage:
+
+ $lock = File::Flock::Retry->lock($path, \%opts)
 
 Attempt to acquire an exclusive lock on C<$path>. C<$path> will be created if
-not already exists. If $path is already locked by another process, will retry
+not already exists. If C<$path> is already locked by another process, will retry
 every second for a number of seconds (by default 60). Will die if failed to
 acquire lock after all retries.
 
 Will automatically unlock if C<$lock> goes out of scope. Upon unlock, will
-remove C<$path> if it was created and is still empty (this behavior is the same
-as C<File::Flock>).
+remove C<$path> if it was created by L</lock> and is still empty (this behavior
+is the same as C<File::Flock>).
 
 Available options:
 
@@ -175,13 +179,22 @@ set to true, a shared lock (LOCK_SH) is attempted.
 
 =back
 
-=head2 $lock->unlock
+=head2 unlock
 
-Unlock.
+Usage:
 
-=head2 $lock->release
+ $lock->unlock
 
-Synonym for C<unlock()>.
+Unlock. will remove lock file if it was created by L</lock> and is still empty
+(this behavior is the same as C<File::Flock>).
+
+=head2 release
+
+Usage:
+
+ $lock->release
+
+Synonym for L</unlock>.
 
 
 =head1 CAVEATS
