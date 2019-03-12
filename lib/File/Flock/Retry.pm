@@ -108,6 +108,11 @@ sub unlock {
     $self->_unlock;
 }
 
+sub handle {
+    my $self = shift;
+    $self->{_fh};
+}
+
 sub DESTROY {
     my $self = shift;
     $self->_unlock;
@@ -209,6 +214,14 @@ Usage:
  $lock->release
 
 Synonym for L</unlock>.
+
+=head2 handle
+
+Usage:
+
+ my $fh = $lock->handle;
+
+Return the file handle.
 
 
 =head1 CAVEATS
