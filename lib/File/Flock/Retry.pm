@@ -18,6 +18,7 @@ sub lock {
     $h{path}    = $path;
     $h{retries} = $opts->{retries} // 60;
     $h{shared}  = $opts->{shared} // 0;
+    $h{mode}    = $opts->{mode} // (O_CREAT | O_RDWR);
 
     my $self = bless \%h, $class;
     $self->_lock;
@@ -40,7 +41,7 @@ sub _lock {
         $tries++;
 
         # 1
-        open $self->{_fh}, ">>", $path
+        sysopen $self->{_fh}, $path, $self->{mode}
             or die "Can't open lock file '$path': $!";
 
         # 2
@@ -155,10 +156,10 @@ Usage:
 
  $lock = File::Flock::Retry->lock($path, \%opts)
 
-Attempt to acquire an exclusive lock on C<$path>. C<$path> will be created if
-not already exists. If C<$path> is already locked by another process, will retry
-every second for a number of seconds (by default 60). Will die if failed to
-acquire lock after all retries.
+Attempt to acquire an exclusive lock on C<$path>. By default, C<$path> will be
+created if not already exists (see L</mode>). If C<$path> is already locked by
+another process, will retry every second for a number of seconds (by default
+60). Will die if failed to acquire lock after all retries.
 
 Will automatically unlock if C<$lock> goes out of scope. Upon unlock, will
 remove C<$path> if it was created by L</lock> and is still empty (this behavior
@@ -168,11 +169,24 @@ Available options:
 
 =over
 
-=item * retries => int (default: 60)
+=item * mode
+
+Integer. Default: O_CREAT | O_RDWR.
+
+File open mode, to be passed to Perl's C<sysopen()>. For example, if you want to
+avoid race condition between creating and locking the file, you might want to
+use C<< O_CREAT | O_EXCL | O_RDWR >> to fail when the file already exists. Note
+that the constants are available after you do a C<< use Fcntl ':flock'; >>.
+
+=item * retries
+
+Integer. Default: 60.
 
 Number of retries (equals number of seconds, since retry is done every second).
 
-=item * shared => bool (default: 0)
+=item * shared
+
+Boolean. Default: 0.
 
 By default, an exclusive lock (LOCK_EX) is attempted. However, if this option is
 set to true, a shared lock (LOCK_SH) is attempted.
