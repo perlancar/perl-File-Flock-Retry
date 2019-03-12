@@ -204,7 +204,10 @@ Not yet tested on Windows. Some filesystems do not support inode?
 
 =head1 SEE ALSO
 
-L<File::Flock>
+L<File::Flock>, a bit too heavy in terms of dependencies and startup overhead,
+for my taste. It depends on things like L<File::Slurp> and
+L<Data::Structure::Util> (which loads L<Digest::MD5>, L<Storable>, among
+others).
 
 L<File::Flock::Tiny> which is also tiny, but does not have the autoremove and
 autoretry capability which I want. See also:
