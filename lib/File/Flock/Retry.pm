@@ -242,4 +242,8 @@ L<https://github.com/trinitum/perl-File-Flock-Tiny/issues/1>
 
 flock() Perl function.
 
+An alternative to flock() is just using sysopen() with O_CREAT|O_EXCL mode to
+create lock files. This is supported on more filesystems (particularly network
+filesystems which lack flock()).
+
 =cut
