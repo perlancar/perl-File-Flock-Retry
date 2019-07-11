@@ -1,4 +1,4 @@
-0.631   2019-03-12 (PERLANCAR)
+0.631   2019-03-12  Released-By: PERLANCAR
 
 	- Add method: handle().
 
@@ -8,7 +8,7 @@
 	  flock().
 
 
-0.630   2019-03-12 (PERLANCAR)
+0.630   2019-03-12  Released-By: PERLANCAR
 
 	- No functional changes.
 
@@ -18,17 +18,17 @@
 	  some POD formatting to make methods more linkable.
 
 
-0.62    2017-07-01 (PERLANCAR)
+0.62    2017-07-01  Released-By: PERLANCAR
 
         - [doc] Format link with L<>.
 
 
-0.61    2015-10-22 (PERLANCAR)
+0.61    2015-10-22  Released-By: PERLANCAR
 
         - Add option: shared.
 
 
-0.60    2015-09-03 (PERLANCAR)
+0.60    2015-09-03  Released-By: PERLANCAR
 
 	- No functional changes.
 
@@ -37,6 +37,6 @@
 	  requirement.
 
 
-0.59    2014-12-05 (PERLANCAR)
+0.59    2014-12-05  Released-By: PERLANCAR
 
         - Split from SHARYANTO-File-Util and renamed to File-Flock-Retry.
