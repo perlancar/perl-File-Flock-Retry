@@ -1,6 +1,8 @@
 package File::Flock::Retry;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 use 5.010001;
@@ -72,7 +74,7 @@ sub _lock {
             sleep 1;
         }
     }
-    $self->{_created} = !$existed;
+    $self->{_acquired} = 1;
     1;
 }
 
@@ -85,7 +87,7 @@ sub _unlock {
     # don't unlock if we are not holding the lock
     return 0 unless $self->{_fh};
 
-    unlink $self->{path} if $self->{_created} && !(-s $self->{path});
+    unlink $self->{path} if $self->{_acquired} && !(-s $self->{path});
 
     {
         # to shut up warning about flock on closed filehandle (XXX but why
@@ -167,8 +169,7 @@ another process, will retry every second for a number of seconds (by default
 60). Will die if failed to acquire lock after all retries.
 
 Will automatically unlock if C<$lock> goes out of scope. Upon unlock, will
-remove C<$path> if it was created by L</lock> and is still empty (this behavior
-is the same as C<File::Flock>).
+remove C<$path> if it is still empty (zero-sized).
 
 Available options:
 
@@ -204,8 +205,7 @@ Usage:
 
  $lock->unlock
 
-Unlock. will remove lock file if it was created by L</lock> and is still empty
-(this behavior is the same as C<File::Flock>).
+Unlock. will remove lock file if it is still empty.
 
 =head2 release
 
