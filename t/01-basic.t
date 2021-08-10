@@ -1,17 +1,16 @@
 #!perl
 
-use 5.010;
+use 5.010001;
 use strict;
 use warnings;
+use Test::More 0.98;
 
 use Cwd qw(abs_path);
 use File::chdir;
+use File::Flock::Retry;
 use File::Slurper qw(write_text);
 use File::Spec;
-use Test::More 0.98;
-
 use File::Temp qw(tempdir);
-use File::Flock::Retry;
 
 plan skip_all => 'Not tested on Windows yet' if $^O =~ /win32/i;
 
@@ -40,7 +39,7 @@ subtest "already exists" => sub {
     my $lock = File::Flock::Retry->lock("f1");
     ok((-f "f1"), "f1 exists after lock");
     undef $lock;
-    ok((-f "f1"), "f1 still exists after DESTROY");
+    ok(!(-f "f1"), "f1 created after DESTROY");
     unlink "f1";
 };
 
